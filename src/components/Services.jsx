@@ -2,7 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaUsers, FaMoneyBillWave, FaTools, FaChartLine, FaSearch, FaHandshake } from 'react-icons/fa';
 import Cta from './Cta.jsx';
-import serviceImage from '../assets/service1.jpg'; // Replace with your actual image
+import screening from '../assets/screening.jpg';
+import collection from '../assets/collection.jpg';
+import maintain from '../assets/maintain.jpg';
+import investment from '../assets/investment.jpg';
+import marketing from '../assets/marketing.jpg';
+import full from '../assets/full.jpg';
 
 const Services = () => {
   const servicesData = [
@@ -10,31 +15,37 @@ const Services = () => {
       icon: <FaUsers />,
       title: 'Tenant Screening',
       description: 'Professional tenant screening and verification to ensure reliable, quality tenants for your properties with comprehensive background checks.',
+      image: screening,
     },
     {
       icon: <FaMoneyBillWave />,
       title: 'Rent Collection',
       description: 'Efficient rent collection systems with automated reminders, secure payment processing, and detailed financial reporting.',
+      image: collection,
     },
     {
       icon: <FaTools />,
       title: 'Property Maintenance',
       description: 'Comprehensive property maintenance and repair services to keep your investments in top condition with 24/7 emergency support.',
+      image: maintain,
     },
     {
       icon: <FaChartLine />,
       title: 'Investment Consultation',
       description: 'Expert advice on property investment opportunities, market analysis, and portfolio optimization strategies for maximum returns.',
+      image: investment,
     },
     {
       icon: <FaSearch />,
       title: 'Market Research',
       description: 'Comprehensive market analysis and investment opportunity identification with detailed reports and trend forecasting.',
+      image: marketing,
     },
     {
       icon: <FaHandshake />,
       title: 'Full Service Management',
       description: 'Complete property management solutions ensuring maximum occupancy, reliable income streams, and property value appreciation.',
+      image: full,
     },
   ];
 
@@ -68,7 +79,7 @@ const Services = () => {
           >
             <div className="flex-1">
               <img
-                src={serviceImage}
+                src={service.image}
                 alt={service.title}
                 className="w-full h-[300px] sm:h-[400px] object-cover rounded-3xl shadow-shadow-light dark:shadow-shadow-heavy"
               />

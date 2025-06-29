@@ -5,6 +5,7 @@ import Services from '../src/components/Services.jsx';
 import PropertyShowcase from '../src/components/PropertyShowcase.jsx';
 import Contact from '../src/components/Contact.jsx';
 import Footer from '../src/components/Footer.jsx';
+import LandAdvert from './components/LandAdvert.jsx';
 
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
     <div>
       <Navbar />
       <Hero />
+      <LandAdvert/>
       <Services />
       <PropertyShowcase />
       <Contact />
