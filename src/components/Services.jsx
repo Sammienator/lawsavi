@@ -1,12 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUsers, FaMoneyBillWave, FaTools, FaChartLine, FaSearch, FaHandshake } from 'react-icons/fa';
+import { FaUsers, FaMoneyBillWave, FaTools, FaChartLine, FaHandshake } from 'react-icons/fa';
 import Cta from './Cta.jsx';
 import screening from '../assets/screening.jpg';
 import collection from '../assets/collection.jpg';
 import maintain from '../assets/maintain.jpg';
 import investment from '../assets/investment.jpg';
-import marketing from '../assets/marketing.jpg';
 import full from '../assets/full.jpg';
 
 const Services = () => {
@@ -34,12 +33,6 @@ const Services = () => {
       title: 'Investment Consultation',
       description: 'Expert advice on property investment opportunities, market analysis, and portfolio optimization strategies for maximum returns.',
       image: investment,
-    },
-    {
-      icon: <FaSearch />,
-      title: 'Market Research',
-      description: 'Comprehensive market analysis and investment opportunity identification with detailed reports and trend forecasting.',
-      image: marketing,
     },
     {
       icon: <FaHandshake />,

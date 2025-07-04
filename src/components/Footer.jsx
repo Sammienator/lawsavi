@@ -67,7 +67,7 @@ const Footer = () => {
           </motion.div>
         </div>
         <div className="border-t border-[#334155] dark:border-text-light/20 pt-4 text-center opacity-70 text-sm sm:text-base">
-          <p>© 2025 Lawsavic Property Management. All rights reserved. | Designed with ❤️ for excellence</p>
+          <p>© 2025 Lawsavic Property Management. All rights reserved. Samuel Mugo.</p>
         </div>
       </div>
     </footer>
