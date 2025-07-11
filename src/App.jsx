@@ -6,6 +6,7 @@ import PropertyShowcase from '../src/components/PropertyShowcase.jsx';
 import Contact from '../src/components/Contact.jsx';
 import Footer from '../src/components/Footer.jsx';
 import LandAdvert from './components/LandAdvert.jsx';
+import ManagerAndTeam from './components/ManagerAndTeam.jsx';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
       <Services />
       <PropertyShowcase />
       <Contact />
+      <ManagerAndTeam/>
       <Footer />
     </div>
   );

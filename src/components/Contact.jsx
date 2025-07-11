@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaQuoteLeft } from 'react-icons/fa';
-import hero1 from '../assets/hero1.jpg';
-
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
@@ -28,18 +26,11 @@ const Contact = () => {
     tap: { scale: 0.95 },
   };
 
-  const teamMembers = [
-    { name: 'Benitar Loko', role: 'Property Manager', image: hero1 },
-    { name: 'Jane S', role: 'Investment Consultant', image: hero1 },
-    { name: 'Michael Brown', role: 'Maintenance Coordinator', image: hero1 },
-    { name: 'Emily Davis', role: 'Client Relations', image: hero1 },
-  ];
-
   return (
-    <section id="contact" className="py-16 sm:py-24 bg-gradient-to-b from-bg-light to-[#f1f5f9] dark:from-bg-dark dark:to-[#1e293b] text-text-dark dark:text-text-light">
+    <section id="contact" className="py-16 sm:py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.h2
-          className="text-center text-4xl sm:text-5xl font-extrabold mb-8 sm:mb-12 text-text-dark dark:text-text-light relative after:content-[''] after:absolute after:bottom-[-12px] after:left-1/2 after:-translate-x-1/2 after:w-24 after:h-[3px] after:bg-gradient-primary after:rounded-full"
+          className="text-center text-4xl sm:text-5xl font-extrabold mb-8 sm:mb-12 text-slate-900 dark:text-white relative after:content-[''] after:absolute after:bottom-[-12px] after:left-1/2 after:-translate-x-1/2 after:w-24 after:h-[3px] after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:rounded-full"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
@@ -47,8 +38,9 @@ const Contact = () => {
         >
           Connect With Us
         </motion.h2>
+        
         <motion.div
-          className="h-[400px] sm:h-[500px] rounded-[20px] overflow-hidden shadow-xl dark:shadow-shadow-heavy mb-12 sm:mb-16"
+          className="h-[400px] sm:h-[500px] rounded-[20px] overflow-hidden shadow-xl dark:shadow-2xl mb-12 sm:mb-16 border border-slate-200 dark:border-slate-700"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
@@ -65,10 +57,11 @@ const Contact = () => {
             title="Jogra House, Kitengela"
           ></iframe>
         </motion.div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
           <div className="space-y-8">
             <motion.p
-              className="text-base sm:text-lg text-text-light dark:text-[#cbd5e1] leading-relaxed max-w-xl"
+              className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed max-w-xl"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
@@ -76,6 +69,7 @@ const Contact = () => {
             >
               Elevate your property investment journey with our expert guidance. Reach out for a personalized consultation and discover unparalleled opportunities.
             </motion.p>
+            
             <div className="grid gap-6">
               {[
                 { icon: <FaPhone />, title: 'Phone Numbers', details: ['+254 722 628 583', '+254 722 482 202'] },
@@ -85,45 +79,46 @@ const Contact = () => {
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
-                  className="flex items-center gap-4 p-4 bg-white dark:bg-bg-dark-card rounded-[15px] shadow-lg dark:shadow-shadow-heavy hover:shadow-xl transition-shadow duration-300"
+                  className="flex items-center gap-4 p-5 bg-white dark:bg-slate-800 rounded-[15px] shadow-lg dark:shadow-2xl hover:shadow-xl dark:hover:shadow-slate-700/50 transition-all duration-300 border border-slate-100 dark:border-slate-700"
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-50px' }}
                   variants={fadeInUp}
-                  whileHover={{ x: 5 }}
+                  whileHover={{ x: 5, scale: 1.02 }}
                 >
                   <motion.div
-                    className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center text-white"
+                    className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg"
                     whileHover={{ rotate: 360, transition: { duration: 0.5 } }}
                   >
                     {item.icon}
                   </motion.div>
                   <div>
-                    <h4 className="text-lg font-semibold text-text-dark dark:text-text-light">{item.title}</h4>
+                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">{item.title}</h4>
                     {item.details.map((detail, i) => (
-                      <p key={i} className="text-sm text-text-light dark:text-[#cbd5e1]">{detail}</p>
+                      <p key={i} className="text-sm text-slate-600 dark:text-slate-300 font-medium">{detail}</p>
                     ))}
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
+          
           <motion.form
             onSubmit={handleSubmit}
-            className="p-6 bg-white dark:bg-bg-dark-card rounded-[20px] shadow-lg dark:shadow-shadow-heavy"
+            className="p-8 bg-white dark:bg-slate-800 rounded-[20px] shadow-lg dark:shadow-2xl border border-slate-100 dark:border-slate-700"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={fadeInUp}
           >
-            <div className="grid gap-4">
+            <div className="grid gap-6">
               <motion.input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Your Name"
-                className="p-4 rounded-[12px] bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-color dark:focus:ring-accent-color transition-all duration-300"
+                className="p-4 rounded-[12px] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent transition-all duration-300 placeholder-slate-500 dark:placeholder-slate-400"
                 required
                 whileFocus={{ scale: 1.02 }}
               />
@@ -133,7 +128,7 @@ const Contact = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Your Email"
-                className="p-4 rounded-[12px] bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-color dark:focus:ring-accent-color transition-all duration-300"
+                className="p-4 rounded-[12px] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent transition-all duration-300 placeholder-slate-500 dark:placeholder-slate-400"
                 required
                 whileFocus={{ scale: 1.02 }}
               />
@@ -143,13 +138,13 @@ const Contact = () => {
                 onChange={handleInputChange}
                 placeholder="Your Message"
                 rows="5"
-                className="p-4 rounded-[12px] bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-color dark:focus:ring-accent-color transition-all duration-300"
+                className="p-4 rounded-[12px] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-transparent transition-all duration-300 placeholder-slate-500 dark:placeholder-slate-400 resize-none"
                 required
                 whileFocus={{ scale: 1.02 }}
               ></motion.textarea>
               <motion.button
                 type="submit"
-                className="px-8 py-3 bg-gradient-primary text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-purple-500"
                 variants={scaleHover}
                 whileHover="hover"
                 whileTap="tap"
@@ -159,71 +154,6 @@ const Contact = () => {
             </div>
           </motion.form>
         </div>
-        <motion.div
-          className="mt-12 sm:mt-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={fadeInUp}
-        >
-          <h3 className="text-center text-2xl sm:text-3xl font-bold text-text-dark dark:text-text-light mb-8 relative after:content-[''] after:absolute after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-[2px] after:bg-gradient-primary after:rounded-full">
-            Manager's Remarks
-          </h3>
-          <motion.div
-            className="max-w-3xl mx-auto p-6 bg-white dark:bg-bg-dark-card rounded-[20px] shadow-lg dark:shadow-shadow-heavy flex flex-col sm:flex-row items-center gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-            variants={fadeInUp}
-          >
-            <img
-              src={hero1}
-              alt="Alex Johnson"
-              className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
-            />
-            <div className="text-center sm:text-left">
-              <FaQuoteLeft className="text-3xl text-primary-color dark:text-accent-color mx-auto sm:mx-0 mb-4" />
-              <p className="text-base sm:text-lg text-text-light dark:text-[#cbd5e1] italic">
-                "At Lawsavic, our commitment is to deliver exceptional property management and investment solutions, ensuring our clients achieve their financial goals with peace of mind."
-              </p>
-              <p className="mt-4 text-sm font-semibold text-text-dark dark:text-text-light">
-                - Lawrence Kiambi, Managing Director
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-        <motion.div
-          className="mt-12 sm:mt-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={fadeInUp}
-        >
-          <h3 className="text-center text-2xl sm:text-3xl font-bold text-text-dark dark:text-text-light mb-8 relative after:content-[''] after:absolute after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-[2px] after:bg-gradient-primary after:rounded-full">
-            Our Team
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {teamMembers.map((member, idx) => (
-              <motion.div
-                key={idx}
-                className="p-4 bg-white dark:bg-bg-dark-card rounded-[15px] shadow-lg dark:shadow-shadow-heavy text-center"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-50px' }}
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-              >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h4 className="text-lg font-semibold text-text-dark dark:text-text-light">{member.name}</h4>
-                <p className="text-sm text-text-light dark:text-[#cbd5e1]">{member.role}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
