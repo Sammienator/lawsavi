@@ -1,34 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import hero1 from '../assets/hero1.jpg';
 
 const ManagerAndTeam = () => {
   const [currentTeamMember, setCurrentTeamMember] = useState(0);
+
+  // Using placeholder images for demo
+  const hero1 = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face";
+  const hero2 = "https://images.unsplash.com/photo-1494790108755-2616b612b637?w=400&h=400&fit=crop&crop=face";
+  const hero3 = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face";
+  const hero4 = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face";
 
   const teamMembers = [
     { 
       name: 'Benitar Loko', 
       role: 'Property Manager', 
-      image: hero1,
+      image: hero2,
       quote: "Every property has potential. My job is to unlock it and maximize its value for our clients."
     },
     { 
       name: 'Jane S', 
       role: 'Investment Consultant', 
-      image: hero1,
+      image: hero4,
       quote: "Smart investments aren't just about numbers—they're about understanding market trends and client dreams."
     },
     { 
       name: 'Michael Brown', 
       role: 'Maintenance Coordinator', 
-      image: hero1,
+      image: hero3,
       quote: "A well-maintained property is a valuable property. Excellence in upkeep ensures lasting returns."
     },
     { 
       name: 'Emily Davis', 
       role: 'Client Relations', 
-      image: hero1,
+      image: hero4,
       quote: "Building relationships is the foundation of our success. Every client deserves personalized attention."
     },
   ];
@@ -98,52 +103,91 @@ const ManagerAndTeam = () => {
             variants={fadeInUp}
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              {/* Manager's Image */}
-              <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 p-8 flex items-center justify-center">
+              {/* Manager's Image - Clean, No Background */}
+              <div className="relative p-8 sm:p-12 flex items-center justify-center">
                 <div className="relative">
-                  <img
+                  <motion.img
                     src={hero1}
                     alt="Lawrence Kiambi"
-                    className="w-48 h-48 sm:w-64 sm:h-64 rounded-full object-cover border-8 border-white shadow-2xl"
+                    className="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl object-cover shadow-2xl"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    viewport={{ once: true }}
                   />
-                  <div className="absolute -top-4 -left-4 w-16 h-16 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg">
-                    <FaQuoteLeft className="text-blue-600 text-xl" />
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                    <FaQuoteLeft className="text-white text-xl" />
                   </div>
+                  
+                  {/* Subtle Background Pattern */}
+                  <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full -z-10 blur-sm"></div>
                 </div>
               </div>
               
               {/* Manager's Message */}
               <div className="p-8 sm:p-12 flex flex-col justify-center">
                 <div className="space-y-6">
-                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <motion.p 
+                    className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    viewport={{ once: true }}
+                  >
                     Welcome to Lawsavic Property Management, where excellence meets innovation in the real estate sector. 
                     With over a decade of experience in property investment and management, we've built our reputation on 
                     trust, transparency, and delivering exceptional results for our clients.
-                  </p>
+                  </motion.p>
                   
-                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <motion.p 
+                    className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    viewport={{ once: true }}
+                  >
                     Our approach is centered on understanding each client's unique needs and crafting personalized solutions 
                     that maximize returns while minimizing risks. We believe that successful property investment goes beyond 
                     just buying and selling – it's about building lasting relationships and creating sustainable wealth.
-                  </p>
+                  </motion.p>
                   
-                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <motion.p 
+                    className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    viewport={{ once: true }}
+                  >
                     At Lawsavic, we leverage cutting-edge technology and market insights to stay ahead of industry trends. 
                     Our comprehensive services include property acquisition, management, maintenance, and strategic investment 
                     planning, all delivered with the highest standards of professionalism.
-                  </p>
+                  </motion.p>
                   
-                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <motion.p 
+                    className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}
+                  >
                     I invite you to experience the difference that comes with working with a team that genuinely cares about 
                     your success. Together, we'll turn your property investment dreams into reality, ensuring peace of mind 
                     and exceptional returns every step of the way.
-                  </p>
+                  </motion.p>
                 </div>
                 
-                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-600">
+                <motion.div 
+                  className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-600"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">Lawrence Kiambi</h3>
                   <p className="text-sm font-medium text-blue-600 dark:text-purple-400 mt-1">Managing Director & Founder</p>
-                </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -250,7 +294,6 @@ const ManagerAndTeam = () => {
                   key={currentTeamMember}
                 />
               </div>
-          
             </div>
           </div>
         </motion.div>

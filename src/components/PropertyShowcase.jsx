@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaSchool, FaBuilding, FaMapMarkedAlt, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaExpandArrowsAlt, FaRoad, FaGraduationCap, FaUsers, FaHome, FaHospital, FaStore, FaTree } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaExpandArrowsAlt, FaRoad, FaGraduationCap, FaUsers, FaHome, FaHospital, FaStore, FaTree, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+// Using placeholder images for demo - replace with your actual image imports
+import school1 from '../assets/school1.jpg';
+import school2 from '../assets/school2.jpg';
+import school3 from '../assets/school3.jpg';
+import school4 from '../assets/school4.jpg';
+
+const fallbackImage = "https://via.placeholder.com/800x600?text=Fallback+Image";
 
 const properties = [
   {
@@ -16,7 +24,7 @@ const properties = [
       { icon: <FaUsers />, text: '500+ Student Capacity' },
       { icon: <FaHome />, text: 'Dormitory Facilities' },
     ],
-    images: [<FaSchool />, <FaBuilding />, <FaMapMarkedAlt />, <FaGraduationCap />, <FaUsers />, <FaHome />],
+    images: [school1, school2, school3, school4],
   },
   {
     id: 2,
@@ -31,7 +39,12 @@ const properties = [
       { icon: <FaUsers />, text: '200+ Bed Capacity' },
       { icon: <FaHome />, text: 'Staff Quarters' },
     ],
-    images: [<FaHospital />, <FaBuilding />, <FaMapMarkedAlt />, <FaUsers />, <FaHome />],
+    images: [
+      "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1583947581924-860bda6a26de?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=800&h=600&fit=crop"
+    ],
   },
   {
     id: 3,
@@ -46,33 +59,73 @@ const properties = [
       { icon: <FaUsers />, text: 'High Foot Traffic' },
       { icon: <FaTree />, text: 'Landscaped Grounds' },
     ],
-    images: [<FaStore />, <FaBuilding />, <FaMapMarkedAlt />, <FaTree />, <FaUsers />, <FaHome />],
+    images: [
+      "https://images.unsplash.com/photo-1567728744813-23d6c6b0a4b2?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1549517045-bc93de075e53?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=600&fit=crop"
+    ],
   },
 ];
 
 const PropertyShowcase = () => {
   const [currentProperty, setCurrentProperty] = React.useState(0);
   const [currentImage, setCurrentImage] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % properties[currentProperty].images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [currentProperty]);
-
-  const changeImage = (direction) => {
+  // Moved changeImage and changeProperty before useEffect
+  const changeImage = useCallback((direction) => {
     setCurrentImage((prev) => {
       let next = prev + direction;
       if (next >= properties[currentProperty].images.length) next = 0;
       if (next < 0) next = properties[currentProperty].images.length - 1;
       return next;
     });
-  };
+  }, [currentProperty]);
 
-  const changeProperty = (index) => {
+  const changeProperty = useCallback((index) => {
     setCurrentProperty(index);
     setCurrentImage(0);
+  }, []);
+
+  // Preload next image
+  React.useEffect(() => {
+    const nextImageIndex = (currentImage + 1) % properties[currentProperty].images.length;
+    const img = new Image();
+    img.src = properties[currentProperty].images[nextImageIndex];
+  }, [currentImage, currentProperty]);
+
+  // Auto-slide with pause on hover
+  React.useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % properties[currentProperty].images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentProperty, isPaused]);
+
+  // Keyboard navigation
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') changeImage(-1);
+      if (e.key === 'ArrowRight') changeImage(1);
+      if (e.key >= '1' && e.key <= '3') changeProperty(parseInt(e.key) - 1);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [changeImage, changeProperty]);
+
+  // Touch swipe support
+  const [touchStart, setTouchStart] = React.useState(null);
+  const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX);
+  const handleTouchEnd = (e) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+    if (Math.abs(diff) > 50) { // Swipe threshold
+      if (diff > 0) changeImage(1); // Swipe left
+      else changeImage(-1); // Swipe right
+    }
+    setTouchStart(null);
   };
 
   const fadeInUp = {
@@ -87,10 +140,10 @@ const PropertyShowcase = () => {
   };
 
   return (
-    <section id="properties" className="py-16 sm:py-24 bg-bg-light dark:bg-bg-dark">
+    <section id="properties" className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.h2
-          className="text-center text-3xl sm:text-4xl font-bold text-text-dark dark:text-text-light mb-8 sm:mb-12 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-[2px] after:bg-gradient-primary after:rounded"
+          className="text-center text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-8 sm:mb-12 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-[2px] after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:rounded"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
@@ -98,7 +151,17 @@ const PropertyShowcase = () => {
         >
           Featured Properties
         </motion.h2>
-        <motion.div className="relative mt-8 sm:mt-12" initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={fadeInUp}>
+        <motion.div
+          className="relative mt-8 sm:mt-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={fadeInUp}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocus={() => setIsPaused(true)}
+          onBlur={() => setIsPaused(false)}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentProperty}
@@ -108,7 +171,13 @@ const PropertyShowcase = () => {
               exit="exit"
               className="flex flex-col md:flex-row gap-6 sm:gap-8"
             >
-              <div className="flex-1 min-h-[300px] sm:min-h-[400px] relative bg-gradient-to-br from-[#e2e8f0] to-[#cbd5e1] dark:from-bg-dark dark:to-bg-dark-card rounded-[20px] overflow-hidden">
+              {/* Image Section */}
+              <div
+                className="flex-1 min-h-[300px] sm:min-h-[400px] relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-[20px] overflow-hidden"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                style={{ aspectRatio: '4 / 3' }} // Consistent aspect ratio
+              >
                 <AnimatePresence>
                   <motion.div
                     key={`image-${currentImage}`}
@@ -116,41 +185,52 @@ const PropertyShowcase = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1.05 }}
                     transition={{ duration: 0.5 }}
-                    className="absolute inset-0 flex items-center justify-center w-full h-full"
+                    className="absolute inset-0 w-full h-full"
                   >
-                    <div className="text-6xl sm:text-8xl text-primary-color dark:text-accent-color">
-                      {properties[currentProperty].images[currentImage]}
-                    </div>
+                    <img
+                      src={properties[currentProperty].images[currentImage]}
+                      alt={`${properties[currentProperty].title} ${currentImage + 1}`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => (e.target.src = fallbackImage)}
+                    />
                   </motion.div>
                 </AnimatePresence>
+                
+                {/* Image Counter */}
+                <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                  {currentImage + 1} / {properties[currentProperty].images.length}
+                </div>
               </div>
-              <div className="flex-1 p-6 sm:p-8 bg-bg-light dark:bg-bg-dark-card rounded-[20px] shadow-shadow-light dark:shadow-shadow-heavy flex flex-col justify-center">
-                <span className="inline-block bg-gradient-secondary text-white dark:text-text-light text-xs font-semibold px-4 py-2 rounded-full mb-4 w-fit">
+              
+              {/* Content Section */}
+              <div className="flex-1 p-6 sm:p-8 bg-white dark:bg-slate-800 rounded-[20px] shadow-lg dark:shadow-2xl flex flex-col justify-center">
+                <span className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-semibold px-4 py-2 rounded-full mb-4 w-fit">
                   {properties[currentProperty].type}
                 </span>
-                <h3 className="text-xl sm:text-2xl font-semibold text-text-dark dark:text-text-light mb-4">
+                <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white mb-4">
                   {properties[currentProperty].title}
                 </h3>
-                <p className="text-text-light dark:text-[#cbd5e1] mb-4 text-sm sm:text-base leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 mb-4 text-sm sm:text-base leading-relaxed">
                   {properties[currentProperty].description}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 sm:mb-8">
                   {properties[currentProperty].features.map((feature, idx) => (
                     <motion.div
                       key={idx}
-                      className="flex items-center gap-3 p-3 bg-bg-gray dark:bg-bg-dark-card rounded-[10px] text-text-light dark:text-[#cbd5e1] text-sm"
+                      className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-[10px] text-slate-600 dark:text-slate-300 text-sm"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1, duration: 0.4 }}
                     >
-                      <div className="text-base sm:text-lg text-primary-color dark:text-accent-color">{feature.icon}</div>
+                      <div className="text-base sm:text-lg text-blue-600 dark:text-purple-400">{feature.icon}</div>
                       <span>{feature.text}</span>
                     </motion.div>
                   ))}
                 </div>
                 <motion.a
                   href="#contact"
-                  className="inline-block px-8 py-3 bg-white dark:bg-bg-dark-card text-primary-color dark:text-accent-color font-semibold rounded-full hover:-translate-y-1 hover:shadow-shadow-heavy transition-all duration-300 shadow-shadow-light w-fit"
+                  className="inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:-translate-y-1 hover:shadow-lg transition-all duration-300 w-fit"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -159,31 +239,40 @@ const PropertyShowcase = () => {
               </div>
             </motion.div>
           </AnimatePresence>
+          
+          {/* Navigation Controls */}
           <div className="flex justify-center sm:justify-end gap-4 mt-4 sm:absolute sm:bottom-5 sm:right-5">
             <motion.button
               onClick={() => changeImage(-1)}
-              className="bg-white/90 dark:bg-bg-dark-card/90 p-3 sm:p-4 rounded-full shadow-shadow-light dark:shadow-shadow-heavy hover:scale-110 hover:bg-white dark:hover:bg-bg-dark-card transition-all duration-300"
+              aria-label="Previous image"
+              className="bg-white/90 dark:bg-slate-800/90 p-3 sm:p-4 rounded-full shadow-lg hover:scale-110 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaChevronLeft className="text-text-dark dark:text-text-light" />
+              <FaChevronLeft className="text-slate-900 dark:text-white" />
             </motion.button>
             <motion.button
               onClick={() => changeImage(1)}
-              className="bg-white/90 dark:bg-bg-dark-card/90 p-3 sm:p-4 rounded-full shadow-shadow-light dark:shadow-shadow-heavy hover:scale-110 hover:bg-white dark:hover:bg-bg-dark-card transition-all duration-300"
+              aria-label="Next image"
+              className="bg-white/90 dark:bg-slate-800/90 p-3 sm:p-4 rounded-full shadow-lg hover:scale-110 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaChevronRight className="text-text-dark dark:text-text-light" />
+              <FaChevronRight className="text-slate-900 dark:text-white" />
             </motion.button>
           </div>
+          
+          {/* Property Selector Dots */}
           <div className="flex justify-center gap-2 mt-4">
             {properties.map((_, index) => (
               <motion.button
                 key={index}
                 onClick={() => changeProperty(index)}
-                className={`w-3 h-3 rounded-full ${
-                  index === currentProperty ? 'bg-primary-color' : 'bg-gray-400'
+                aria-label={`Select property ${index + 1}`}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentProperty 
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 w-8' 
+                    : 'bg-slate-400 hover:bg-slate-500'
                 }`}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.8 }}
