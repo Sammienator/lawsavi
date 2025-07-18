@@ -13,83 +13,116 @@ const Services = () => {
     {
       icon: <FaUsers />,
       title: 'Tenant Screening',
-      description: 'Professional tenant screening and verification to ensure reliable, quality tenants for your properties with comprehensive background checks.',
+      description: 'Thorough tenant screening with comprehensive background checks to secure reliable, high-quality tenants for your properties.',
       image: screening,
     },
     {
       icon: <FaMoneyBillWave />,
       title: 'Rent Collection',
-      description: 'Efficient rent collection systems with automated reminders, secure payment processing, and detailed financial reporting.',
+      description: 'Streamlined rent collection with automated reminders, secure payments, and detailed financial reporting.',
       image: collection,
     },
     {
       icon: <FaTools />,
       title: 'Property Maintenance',
-      description: 'Comprehensive property maintenance and repair services to keep your investments in top condition with 24/7 emergency support.',
+      description: 'Proactive maintenance and 24/7 emergency support to keep your properties in pristine condition.',
       image: maintain,
     },
     {
       icon: <FaChartLine />,
       title: 'Investment Consultation',
-      description: 'Expert advice on property investment opportunities, market analysis, and portfolio optimization strategies for maximum returns.',
+      description: 'Strategic advice on property investments, market trends, and portfolio optimization for maximum returns.',
       image: investment,
     },
     {
       icon: <FaHandshake />,
       title: 'Full Service Management',
-      description: 'Complete property management solutions ensuring maximum occupancy, reliable income streams, and property value appreciation.',
+      description: 'End-to-end property management to ensure high occupancy, steady income, and long-term value growth.',
       image: full,
     },
   ];
 
   const fadeIn = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
-    exit: { opacity: 0, y: -50, transition: { duration: 0.8, ease: 'easeIn' } },
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
+  const staggerChildren = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   return (
-    <section id="services" className="py-16 sm:py-24 bg-bg-gray dark:bg-bg-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section id="services" className="py-16 sm:py-24 bg-[#F9FAFB] dark:bg-[#1F2A44]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
-          className="text-center text-3xl sm:text-4xl font-bold text-text-dark dark:text-text-light mb-8 sm:mb-12 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-gradient-secondary after:rounded"
+          className="text-center text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-12 font-['Inter'] tracking-tight"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true }}
           variants={fadeIn}
         >
           Our Services
         </motion.h2>
-        {servicesData.map((service, index) => (
-          <motion.div
-            key={index}
-            className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 sm:gap-12 mb-12 sm:mb-16`}
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: false, margin: '-100px' }}
-            variants={fadeIn}
-          >
-            <div className="flex-1">
-              <img
-                src={service.image}
-                alt={service.title}
-                className="w-full h-[300px] sm:h-[400px] object-cover rounded-3xl shadow-shadow-light dark:shadow-shadow-heavy"
-              />
-            </div>
-            <div className="flex-1 flex flex-col justify-center p-6 sm:p-8">
-              <div className="text-4xl sm:text-5xl text-primary-color dark:text-accent-color mb-4 sm:mb-6">
-                {service.icon}
+        <motion.div
+          className="grid gap-12 lg:gap-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          variants={staggerChildren}
+        >
+          {servicesData.map((service, index) => (
+            <motion.div
+              key={index}
+              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-12 bg-[#F9FAFB] dark:bg-[#1F2A44] rounded-xl p-6 lg:p-8 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300`}
+              variants={fadeIn}
+            >
+              <motion.div
+                className="flex-1 overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-[250px] sm:h-[350px] object-cover rounded-xl"
+                  whileInView={{ y: [20, 0], opacity: [0.8, 1] }}
+                  transition={{ duration: 0.5 }}
+                />
+              </motion.div>
+              <div className="flex-1 flex flex-col justify-center gap-4">
+                <motion.div
+                  className="text-5xl text-[#3B82F6] dark:text-[#10B981]"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                >
+                  {service.icon}
+                </motion.div>
+                <motion.h3
+                  className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white font-['Inter']"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                  {service.title}
+                </motion.h3>
+                <motion.p
+                  className="text-gray-600 dark:text-gray-300 text-base leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  {service.description}
+                </motion.p>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-text-dark dark:text-text-light mb-3 sm:mb-4">
-                {service.title}
-              </h3>
-              <p className="text-text-light dark:text-[#cbd5e1] text-sm sm:text-base leading-relaxed">
-                {service.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </motion.div>
         <Cta />
       </div>
     </section>
